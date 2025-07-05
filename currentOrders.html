@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Order - Tiffin Tales</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <style>
+        main {
+            max-width: 800px;
+            margin: 120px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #e63003;
+            margin-bottom: 40px;
+        }
+
+        .order-box {
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .order-box p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .status {
+            font-weight: bold;
+            color: darkorange;
+        }
+
+        .status.confirmed {
+            color: green;
+        }
+
+        footer {
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <marquee class="time-info">
+            Timings- Breakfast: 7:00 AM - 9:00 AM , Lunch: 11:00 AM - 1:00 PM , Dinner: 6:00 PM - 9:00 PM
+        </marquee>
+        <div id="Navbar">
+            <div class="nav-Title">
+                <h1 id="nav-Heading">Tiffin Tales</h1>
+                <div id="nav-H2">Tiffin That Tastes Like Home</div>
+            </div>
+            <div class="nav-anchors">
+                <a href="/afterlogin.html" class="border">Home</a>
+                <a href="/AboutUs.html" class="border">About us</a>
+                <a href="/ContactUs.html" class="border">Contact us</a>
+                <a href="/cart.html"><button>CART</button></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Current Order Section -->
+    <main>
+        <h1>Current Order</h1>
+
+        <!-- Static message (use Flask to inject dynamic order data here) -->
+        <p style='text-align:center;'>You have no current orders.</p>
+
+        <!-- Example of a dynamic order box (uncomment and fill with Flask data if needed)
+        <div class='order-box'>
+            <p><strong>Order ID:</strong> 12345</p>
+            <p><strong>Status:</strong> <span class='status confirmed'>Confirmed</span></p>
+            <p><strong>Ordered At:</strong> 2025-06-27 14:45</p>
+        </div>
+        -->
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="Footer-section">
+            <h1 id="nav-Heading">Tiffin Tales</h1>
+            <div class="Footer-box">
+                <h5>About us</h5>
+                <div class="footer-anchor">
+                    <a href="/Index.html">Home</a>
+                    <a href="/AboutUs.html">About us</a>
+                    <a href="/SignIn.html">SignIn</a>
+                    <a href="/ContactUs.html">Contact Us</a>
+                </div>
+            </div>
+            <div class="Footer-box">
+                <h5>Quick Menu</h5>
+                <div class="footer-anchor">
+                    <a>Terms & Conditions</a>
+                    <a>Privacy Policy</a>
+                    <a>Refund & Cancellation Policy</a>
+                </div>
+            </div>
+            <div class="Footer-box2">
+                <h5>Delivery Timings</h5>
+                <div id="timings">
+                    <p>Breakfast: 7:00 AM - 9:00 AM</p>
+                    <p>Lunch: 11:00 AM - 1:00 PM</p>
+                    <p>Dinner: 6:00 PM - 9:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

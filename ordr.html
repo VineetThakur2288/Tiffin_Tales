@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Tiffin Tales</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <style>
+        main {
+            max-width: 900px;
+            margin: 120px auto 60px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #e63003;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .no-orders {
+            text-align: center;
+            font-size: 18px;
+            color: #777;
+            margin-top: 40px;
+        }
+
+        table {
+            display: none;
+        }
+
+        footer {
+            margin-top: 80px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <marquee class="time-info">
+            Timings - Breakfast: 7:00 AM - 9:00 AM , Lunch: 11:00 AM - 1:00 PM , Dinner: 6:00 PM - 9:00 PM
+        </marquee>
+        <div id="Navbar">
+            <div class="nav-Title">
+                <div>
+                    <h1 id="nav-Heading">Tiffin Tales</h1>
+                </div>
+                <div id="nav-H2">Tiffin That Tastes Like Home</div>
+            </div>
+            <div class="nav-anchors">
+                <a href="afterlogin" class="border">Home</a>
+                <a href="/AboutUs" class="border">About us</a>
+                <a href="/ContactUs" class="border">Contact us</a>
+                <a href="/cart"><button>CART</button></a>
+            </div>
+        </div>
+    </he
+
+    <!-- Orders Section -->
+    <main>
+        <h1>My Orders</h1>
+        <h2>ORDERS WILL BE VERIFIED AND CONFIRMED SHORTLY</h2>
+
+        <div class="no-orders">
+            You have no orders at the moment.
+        </div>
+
+        <!-- Table hidden since there are no orders -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Status</th>
+                    <th>Ordered At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- No rows since PHP has been removed -->
+            </tbody>
+        </table>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="Footer-section">
+            <h1 id="nav-Heading">Tiffin Tales</h1>
+
+            <div class="Footer-box">
+                <h5>About us</h5>
+                <div class="footer-anchor">
+                    <a href="/Index">Home</a>
+                    <a href="/AboutUs">About us</a>
+                    <a href="/SignIn">SignIn</a>
+                    <a href="/ContactUs">Contact Us</a>
+                </div>
+            </div>
+
+            <div class="Footer-box">
+                <h5>Quick Menu</h5>
+                <div class="footer-anchor">
+                    <a>Terms & Conditions</a>
+                    <a>Privacy Policy</a>
+                    <a>Refund & Cancellation Policy</a>
+                </div>
+            </div>
+
+            <div class="Footer-box2">
+                <h5>Delivery Timings</h5>
+                <div id="timings">
+                    <p>Breakfast: 7:00 AM - 9:00 AM</p>
+                    <p>Lunch: 11:00 AM - 1:00 PM</p>
+                    <p>Dinner: 6:00 PM - 9:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

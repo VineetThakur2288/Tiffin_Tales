@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SignUp form</title>
+    <link rel="stylesheet" href="static/style.css" />
+  </head>
+  <body>
+    <header>
+      <marquee class="time-info">
+        Timings- Breakfast: 7:00 AM - 9:00 AM , Lunch: 11:00 AM - 1:00 PM ,
+        Dinner: 6:00 PM - 9:00 PM
+      </marquee>
+      <div id="Navbar">
+        <div class="nav-Title">
+          <div>
+            <h1 id="nav-Heading">Tiffin Tales</h1>
+          </div>
+          <div id="nav-H2">Tiffin That Tastes Like Home</div>
+        </div>
+        <div class="nav-anchors">
+          <a href="/" class="border">Home</a>
+          <a href="/AboutUs" class="border">About us</a>
+          <a href="/ContactUs" class="border">Contact us</a>
+          <a href="/login"><button>Sign In</button></a>
+        </div>
+      </div>
+    </header>
+
+    <main class="Login-main">
+      <div class="login-body">
+        <div class="Login-section">
+          <form action="/SignUp" method="POST">
+            <p id="login-title">SIGN UP</p>
+            <div class="credentials">
+              <p>Your Name</p>
+              <input type="text" name="name" class="input" id="name" placeholder="Enter First Name" />
+            </div>
+            <div class="credentials">
+              <p>Your Email</p>
+              <input
+                type="email"
+                name="email"
+                class="input"
+                placeholder="Enter Last Name"
+                id="email"
+              />
+            </div>
+            <div class="credentials">
+              <p>Mobile Number</p>
+              <input
+                type="number"
+                name="mobile_no"
+                class="input"
+                placeholder="Enter Mobile Number"
+                id="mobile_no"
+              />
+            </div>
+            <div class="credentials">
+              <p>Password</p>
+              <input type="password" name="password" class="input" placeholder="Enter Password" id="password"/>
+            </div>
+            <div class="credentials">
+              <p>Confirm Password</p>
+              <input type="password" name="cnfpass" class="input" id="cnfpass" placeholder="Enter Confirm Password"/>
+            </div>
+            <div class="L-link2">
+              <p>
+                By clicking on Sign Up, I accept the <a>Terms & Conditions</a> &
+                <a>Privacy Policy</a>
+              </p>
+            </div>
+            <div class="credentials">
+              <input type="submit" class="login-submit" value="SIGN UP" />
+            </div>
+          </form>
+
+          <div class="L-link3">
+            <p>Do you already have an account? <a href="/login">Sign In</a></p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="Footer-section ">
+        <h1 id="nav-Heading">Tiffin Tales</h1>
+
+        <div class="Footer-box">
+          <h5>About us</h5>
+          <div class="footer-anchor">
+            <a href="/">Home</a>
+            <a href="AboutUs" >About us</a>
+            <a>Our Plans</a>
+            <a href="/ContactUs" >Contact Us</a>
+          </div>
+        </div>
+
+        <div class="Footer-box">
+          <h5>Quick Menu</h5>
+          <div class="footer-anchor">
+            <a> Terms & Conditions</a>
+            <a>Privacy Policy</a>
+            <a>Refund & Cancellation Policy</a>
+          </div>
+        </div>
+
+        <div class="Footer-box2">
+          <h5>Delivery Timings</h5>
+          <div id="timings">
+            <p>Breakfast : 7:00 AM - 9:00 AM</p>
+            <p>Lunch : 11:00 AM - 1:00 PM</p>
+            <p>Dinner : 6:00 PM - 9:00 PM</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

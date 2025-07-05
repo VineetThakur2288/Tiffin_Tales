@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Profile</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div id="Navbar">
+      <div class="nav-Title">
+        <h1 id="nav-Heading">Tiffin Tales</h1>
+        <div id="nav-H2">Tiffin That Tastes Like Home</div>
+      </div>
+      <div class="nav-anchors">
+        <a href="/afterlogin"><button>Home</button></a>
+        <a href="ContactUs" class="border">Contact us</a>
+        <a href="cart"><button>Cart</button></a>
+      </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div style="margin-top: 150px; display: flex; justify-content: center">
+      <div
+        style="
+          background-color: #f5ebdd;
+          padding: 30px;
+          border-radius: 10px;
+          width: 500px;
+          box-shadow: 2px 2px 5px grey;
+        "
+      >
+        <h2 style="text-align: center; color: #e63003; margin-bottom: 20px">
+          {{ user.name}}'s Profile
+        </h2>
+        <form
+          action="/profile"
+          method="POST"
+          style="display: flex; flex-direction: column; gap: 15px"
+        >
+          <!-- Non-editable Fields -->
+          <label
+            >Name: <span style="font-weight: bold">{{ user.name }}</span></label
+          >
+          <label
+            >Mobile:
+            <span style="font-weight: bold">{{ user.mobile_no }}</span></label
+          >
+          <label
+            >Email:
+            <span style="font-weight: bold">{{ user.email }}</span></label
+          >
+          <label
+            >Gender:
+            <span style="font-weight: bold">{{ user.gender}}</span></label
+          >
+          <label
+            >Date of Birth:
+            <span style="font-weight: bold">{{ user.dob }}</span></label>
+          <label
+            >Address:
+            <span style="font-weight: bold">{{ user.address }}</span></label><a
+            href="/editprofile/{{user.sno}}"
+            class="login-submit"
+            style="
+              display: inline-block;
+              padding: 10px 20px;
+              background-color: blue;
+              color: white;
+              border-radius: 10px;
+              text-decoration: none;
+              font-size: 40px;
+              text-align: center; margin-top: 20px">
+            Edit your Profile
+          </a>
+        </form>
+
+        <!-- Logout Button -->
+        <div style="text-align: center; margin-top: 20px">
+          <a href="/logout">
+            <button
+              style="
+                background-color: red;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px;
+              "
+            >
+              Logout
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

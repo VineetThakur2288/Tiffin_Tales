@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Confirm Order</title>
+  <script>
+    // This script simulates confirming an order and clearing the cart
+    function confirmOrder() {
+      // Remove the cart from localStorage
+      localStorage.removeItem('cart');
+
+      // Redirect to order summary page
+      window.location.href = 'ordr.html'; // or 'orders.php' if you're still using PHP backend
+    }
+    // Automatically trigger the function (similar to how PHP ran on page load)
+    window.onload = confirmOrder;
+  </script>
+</head>
+<body>
+  <p>Processing your order...</p>
+</body>
+</html>

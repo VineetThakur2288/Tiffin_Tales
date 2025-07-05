@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customized Meal Plan - Tiffin Tales</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <style>
+        .grid-table {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        .grid-table th, .grid-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        .grid-table select {
+            width: 100%;
+            padding: 5px;
+        }
+        .Plan-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .DropdownBox {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        .Dropdown label {
+            font-weight: bold;
+        }
+        /* Optional styling for price text */
+        td span {
+            margin-left: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <marquee class="time-info">
+            Timings - Breakfast: 7:00 AM - 9:00 AM , Lunch: 11:00 AM - 1:00 PM , Dinner: 6:00 PM - 9:00 PM
+        </marquee>
+        <div id="Navbar">
+            <div class="nav-Title">
+                <h1 id="nav-Heading">Tiffin Tales</h1>
+                <div id="nav-H2">Tiffin That Tastes Like Home</div>
+            </div>
+            <div class="nav-anchors">
+                <a href="/" class="border">Home</a>
+                <a href="AboutUs" class="border">About us</a>
+                <a href="ContactUs" class="border">Contact us</a>
+                <a href="cart"><button>Cart</button></a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h2 style="text-align:center;">Tiffin Tales: Customized Meal Plan</h2>
+        <form action="/customizeplan" method="POST" id="customMealForm">
+            <div class="DropdownBox">
+                <div class="Dropdown">
+                    <label>Meal Frequency:</label><br>
+                    <select name="meal_frequency" id="meal_frequency" required>
+                        <option value="Once a Day">Once a Day</option>
+                        <option value="Twice a Day">Twice a Day</option>
+                        <option value="Thrice a Day">Thrice a Day</option>
+                    </select>
+                </div>
+                <div class="Dropdown" name="noofdays" id="noofdays">
+                    <label>Number of Days:</label><br>
+                    <select name="meal_days" id="meal_days" required>
+                        <option value="Full Month (30 Days)">Full Month (30 Days)</option>
+                        <option value="Without Sundays (27 Days)">Without Sundays (27 Days)</option>
+                        <option value="Without Weekends (23 Days)">Without Weekends (23 Days)</option>
+                    </select>
+                </div>
+            </div>
+
+            <table class="grid-table">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Breakfast</th>
+                        <th>Lunch</th>
+                        <th>Dinner</th>
+                    </tr>
+                </thead>
+                <tbody id="mealRows"></tbody>
+            </table>
+            <div style="text-align:center;">
+                <input type="submit" value="Submit" class="Plan-button">
+                <button type="button" class="Plan-button" onclick="addToCart()">Add to Cart</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <div class="Footer-section">
+            <h1 id="nav-Heading">Tiffin Tales</h1>
+            <div class="Footer-box">
+                <h5>About us</h5>
+                <div class="footer-anchor">
+                    <a href="/">Home</a>
+                    <a href="/AboutUs">About us</a>
+                    <a href="/login">SignIn</a>
+                    <a href="/ContactUs">Contact Us</a>
+                </div>
+            </div>
+            <div class="Footer-box">
+                <h5>Quick Menu</h5>
+                <div class="footer-anchor">
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Refund & Cancellation Policy</a>
+                </div>
+            </div>
+            <div class="Footer-box2">
+                <h5>Delivery Timings</h5>
+                <div id="timings">
+                    <p>Breakfast : 7:00 AM - 9:00 AM</p>
+                    <p>Lunch : 11:00 AM - 1:00 PM</p>
+                    <p>Dinner : 6:00 PM - 9:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    const dishPrices = {
+        "Poha": 30,
+        "Upma": 25,
+        "Paratha": 35,
+        "Idli": 28,
+        "Aloo Puri": 32,
+        "Dosa": 30,
+        "Sandwich": 25,
+        "Chole Bhature": 40,
+        "Rajma Rice": 45,
+        "Paneer Sabzi": 50,
+        "Chicken Curry": 60,
+        "Fish Fry": 70,
+        "Veg Biryani": 55,
+        "Egg Curry": 50
+    };
+
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const mealOptions = Object.keys(dishPrices);
+
+    // Generate table rows with price display next to each meal
+    const mealRows = document.getElementById("mealRows");
+
+    for (let i = 0; i < 7; i++) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><strong>${days[i]}</strong></td>
+
+            <td>
+                <select name="breakfast_${i}" onchange="updatePrice(this, 'breakfast_price_${i}')">
+                    ${mealOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                </select>
+                <span id="breakfast_price_${i}">₹${dishPrices[mealOptions[0]]}</span>
+            </td>
+
+            <td>
+                <select name="lunch_${i}" onchange="updatePrice(this, 'lunch_price_${i}')">
+                    ${mealOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                </select>
+                <span id="lunch_price_${i}">₹${dishPrices[mealOptions[0]]}</span>
+            </td>
+
+            <td>
+                <select name="dinner_${i}" onchange="updatePrice(this, 'dinner_price_${i}')">
+                    ${mealOptions.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                </select>
+                <span id="dinner_price_${i}">₹${dishPrices[mealOptions[0]]}</span>
+            </td>
+        `;
+        mealRows.appendChild(row);
+    }
+
+    // Updates visible price text on dish change
+    function updatePrice(selectElement, priceSpanId) {
+        const selectedDish = selectElement.value;
+        const price = dishPrices[selectedDish] || 0;
+        document.getElementById(priceSpanId).textContent = `₹${price}`;
+    }
+
+    // Modified: Calculate total price using dishPrices map
+    function addToCart() {
+        const form = document.getElementById("customMealForm");
+        const formData = new FormData(form);
+
+        const plan = {
+            meal_frequency: formData.get("meal_frequency"),
+            meal_days: formData.get("meal_days"),
+            meals: [],
+            total_price: 0
+        };
+
+        let totalPrice = 0;
+
+        for (let i = 0; i < 7; i++) {
+            const breakfast = formData.get("breakfast_" + i);
+            const lunch = formData.get("lunch_" + i);
+            const dinner = formData.get("dinner_" + i);
+
+            const breakfastPrice = dishPrices[breakfast] || 0;
+            const lunchPrice = dishPrices[lunch] || 0;
+            const dinnerPrice = dishPrices[dinner] || 0;
+
+            totalPrice += breakfastPrice + lunchPrice + dinnerPrice;
+
+            plan.meals.push({
+                day: days[i],
+                breakfast: { name: breakfast, price: breakfastPrice },
+                lunch: { name: lunch, price: lunchPrice },
+                dinner: { name: dinner, price: dinnerPrice }
+            });
+        }
+
+        plan.total_price = totalPrice;
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push({
+            type: "Customized Meal Plan",
+            details: plan
+        });
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert("Customized meal plan added to cart! Total Price: ₹" + totalPrice.toFixed(2));
+    }
+    </script>
+</body>
+</html>

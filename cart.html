@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Cart - Tiffin Tales</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <style>
+      .cart-section {
+        padding: 40px 20px;
+        max-width: 800px;
+        margin: 100px auto 40px auto;
+      }
+      .cart-item {
+        border: 2px solid black;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        background-color: #f5f5f5;
+      }
+      .remove-button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        cursor: pointer;
+        border-radius: 6px;
+      }
+      p {
+        font-size: 18px;
+        margin: 8px 0;
+      }
+
+      .payment-button {
+        display: block;
+        margin: 30px auto;
+        background-color: green;
+        color: white;
+        padding: 12px 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-align: center;
+      }
+
+      #head {
+        text-align: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+        position: relative;
+        top: 80px;
+        text-shadow: 2px 2px 2px #e63003;
+      }
+
+      #totalPrice {
+        background-color: rgba(255, 255, 255, 0.85);
+        border: 2px solid #000;
+        padding: 15px;
+        margin-top: 30px;
+        border-radius: 10px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="time-info-wrapper">
+        <div class="time-info-scroll">
+          Timings – Breakfast: 7:00 AM - 9:00 AM, Lunch: 11:00 AM - 1:00 PM, Dinner: 6:00 PM - 9:00 PM
+        </div>
+      </div>
+      <div id="Navbar">
+        <div class="nav-Title">
+          <div>
+            <h1 id="nav-Heading">Tiffin Tales</h1>
+          </div>
+          <div id="nav-H2">Tiffin That Tastes Like Home</div>
+        </div>
+        <div class="nav-anchors">
+          <a href="/afterlogin" class="border">Home</a>
+          <a href="AboutUs" class="border">About us</a>
+          <a href="ContactUs" class="border">Contact us</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Cart Section -->
+    <main class="Cart-main">
+      <p id="head">My Cart</p>
+      <div class="cart-section" id="cartItems"></div>
+      <div style="text-align: center; margin: 30px">
+        <a href="/payment">
+          <button class="payment-button">Proceed to Payment</button>
+        </a>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="Footer-section">
+        <h1 id="nav-Heading">Tiffin Tales</h1>
+        <div class="Footer-box">
+          <h5>About us</h5>
+          <div class="footer-anchor">
+            <a href="/">Home</a>
+            <a href="/AboutUs">About us</a>
+            <a href="/login">SignIn</a>
+            <a href="/ContactUs">Contact Us</a>
+          </div>
+        </div>
+
+        <div class="Footer-box">
+          <h5>Quick Menu</h5>
+          <div class="footer-anchor">
+            <a>Terms & Conditions</a>
+            <a>Privacy Policy</a>
+            <a>Refund & Cancellation Policy</a>
+          </div>
+        </div>
+        <div class="Footer-box2">
+          <h5>Delivery Timings</h5>
+          <div id="timings">
+            <p>Breakfast: 7:00 AM - 9:00 AM</p>
+            <p>Lunch: 11:00 AM - 1:00 PM</p>
+            <p>Dinner: 6:00 PM - 9:00 PM</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Cart Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const cartContainer = document.getElementById("cartItems");
+
+        function getPrice(item) {
+          let totalMeals = 0;
+
+          if (item.type === "Customized Meal Plan") {
+            const mealsArray = item.details.meals || [];
+            mealsArray.forEach(meal => {
+              if (meal.breakfast?.name) totalMeals += 1;
+              if (meal.lunch?.name) totalMeals += 1;
+              if (meal.dinner?.name) totalMeals += 1;
+            });
+          } else {
+            const days = parseInt(item.mealDays?.match(/\d+/)?.[0]) || 0;
+            const times = item.mealTimes?.toLowerCase() || "";
+            let mealsPerDay = 1;
+            if (times.includes("twice")) mealsPerDay = 2;
+            else if (times.includes("thrice")) mealsPerDay = 3;
+            totalMeals = days * mealsPerDay;
+          }
+
+          return totalMeals * 50;
+        }
+
+        function applyDiscount(total) {
+          if (total >= 5000) {
+            return {
+              discountedTotal: total * 0.9,
+              message: "🎉 10% discount applied!",
+            };
+          }
+          return { discountedTotal: total, message: "" };
+        }
+
+        function renderCart() {
+          const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+          cartContainer.innerHTML = "";
+
+          if (cartData.length === 0) {
+            cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+            document.getElementById("totalPrice")?.remove();
+            return;
+          }
+
+          let total = 0;
+
+          cartData.forEach((item, index) => {
+            const div = document.createElement("div");
+            div.classList.add("cart-item");
+
+            const price = getPrice(item);
+            total += price;
+
+            let content = "";
+
+            if (item.plan || item.type === "Basic Meal Plan") {
+              content = `
+                <h3>${item.plan || item.type}</h3>
+                <p><strong>Meal Type:</strong> ${item.mealType}</p>
+                <p><strong>Meal Times:</strong> ${item.mealTimes}</p>
+                <p><strong>Meal Days:</strong> ${item.mealDays}</p>
+                <p><strong>Price:</strong> ₹${price}</p>
+              `;
+            } else if (item.type === "Customized Meal Plan") {
+              content = `
+                <h3>${item.type}</h3>
+                <p><strong>Meal Frequency:</strong> ${item.details.meal_frequency}</p>
+                <p><strong>Meal Days:</strong> ${item.details.meal_days}</p>
+                <p><strong>Meals:</strong></p>
+                <ul>
+                  ${item.details.meals.map(meal => `
+                    <li>
+                      <strong>${meal.day}</strong> -
+                      Breakfast: ${meal.breakfast?.name || "-"},
+                      Lunch: ${meal.lunch?.name || "-"},
+                      Dinner: ${meal.dinner?.name || "-"}
+                    </li>
+                  `).join('')}
+                </ul>
+                <p><strong>Price:</strong> ₹${price}</p>
+              `;
+            }
+
+            const removeBtn = `<button class="remove-button" onclick="removeItem(${index})">Remove</button>`;
+            div.innerHTML = content + removeBtn;
+            cartContainer.appendChild(div);
+          });
+
+          const { discountedTotal, message } = applyDiscount(total);
+
+          let totalDiv = document.getElementById("totalPrice");
+          if (!totalDiv) {
+            totalDiv = document.createElement("div");
+            totalDiv.id = "totalPrice";
+            cartContainer.appendChild(totalDiv);
+          }
+
+          totalDiv.innerHTML = `
+            <p><strong>Total Price:</strong> ₹${total.toFixed(2)}</p>
+            ${message ? `<p style="color: green;"><em>${message}</em></p>` : ""}
+            ${message ? `<p><strong>Discounted Total:</strong> ₹${discountedTotal.toFixed(2)}</p>` : ""}
+          `;
+        }
+
+        window.removeItem = function(index) {
+          let cartData = JSON.parse(localStorage.getItem("cart")) || [];
+          cartData.splice(index, 1);
+          localStorage.setItem("cart", JSON.stringify(cartData));
+          renderCart();
+        };
+
+        renderCart();
+      });
+    </script>
+  </body>
+</html>

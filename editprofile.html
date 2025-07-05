@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div id="Navbar">
+      <div class="nav-Title">
+        <h1 id="nav-Heading">Tiffin Tales</h1>
+        <div id="nav-H2">Tiffin That Tastes Like Home</div>
+      </div>
+      <div class="nav-anchors">
+        <a href="AboutUs" class="border">About us</a>
+        <a href="ContactUs" class="border">Contact us</a>
+        <a href="cart"><button>Cart</button></a>
+      </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div style="margin-top: 150px; display: flex; justify-content: center">
+      <div
+        style="
+          background-color: #f5ebdd;
+          padding: 30px;
+          border-radius: 10px;
+          width: 500px;
+          box-shadow: 2px 2px 5px grey;
+        ">
+        <h2 style="text-align: center; color: #e63003; margin-bottom: 20px">
+          {{ user.name }}'s Profile
+        </h2>
+        <form action="/editprofile/{{ user.sno }}" method="POST" style="display: flex; flex-direction: column; gap: 15px">
+            <label>Name:
+              <input type="text" name="name" id="name" class="input" value="{{ user.name }}" placeholder="Name" required />
+            </label>
+          
+            <label>Mobile:
+              <input type="tel" name="mobile_no" id="mobile_no" class="input" value="{{ user.mobile_no }}" placeholder="Mobile no." required />
+            </label>
+          
+            <label>Email:
+              <input type="email" name="email" id="email" class="input" value="{{ user.email }}" placeholder="Email" required />
+            </label>
+          
+            <label>Gender:
+              <select name="gender" class="input" id="gender" required>
+                <option value="Male" {% if user.gender == 'Male' %}selected{% endif %}>Male</option>
+                <option value="Female" {% if user.gender == 'Female' %}selected{% endif %}>Female</option>
+                <option value="Other" {% if user.gender == 'Other' %}selected{% endif %}>Other</option>
+              </select>
+            </label>
+          
+            <label>Date of Birth:
+              <input type="date" name="dob" id="dob" class="input" value="{{ user.dob }}" required />
+            </label>
+          
+            <label>Address:
+              <textarea name="address" id="address" class="input" rows="3" placeholder="Your Address" required>{{ user.address }}</textarea>
+            </label>
+          
+            <button type="submit"
+              class="login-submit"
+              style="
+                padding: 6px 12px;
+                background-color: #A8E6CF;
+                color: #333;
+                border-radius: 8px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;">
+              Save Changes
+            </button>
+          </form>
+          
+        <!-- Logout Button -->
+        <div style="text-align: center; margin-top: 20px">
+          <a href="/logout">
+            <button
+              style="
+                background-color: red;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px;
+              ">
+              Logout
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

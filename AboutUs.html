@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login form</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <marquee class="time-info">
+        Timings- Breakfast: 7:00 AM - 9:00 AM , Lunch: 11:00 AM - 1:00 PM ,
+        Dinner: 6:00 PM - 9:00 PM
+      </marquee>
+      <div id="Navbar">
+        <div class="nav-Title">
+          <div>
+            <h1 id="nav-Heading">Tiffin Tales</h1>
+          </div>
+          <div id="nav-H2">Tiffin That Tastes Like Home</div>
+        </div>
+        <div class="nav-anchors">
+          <a href="/" class="border">Home</a>
+          <a href="/ContactUs" class="border">ContactUs</a>
+          <a href="/logout"><button>Logout</button></a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="About-section">
+        <div class="About-title"><p>Who We Are</p></div>
+        <div class="About-body">
+          <p>
+            Tiffin Tales is more than just a food delivery service — it’s a
+            passion project created by five Computer Science and Data Analytics
+            students from Indian Institute of Technology (IIT), Patna. As
+            students living away from home, we understood the struggle of
+            finding fresh, homemade, and affordable meals every day. That’s why
+            we built Tiffin Tales — a platform that brings the warmth and
+            comfort of ghar jaisa khana straight to your doorstep. We’ve
+            combined our technical skills with our love for good food to solve a
+            real problem for students, working professionals, and anyone missing
+            home-cooked meals. From designing the website to managing databases
+            and ensuring smooth operations, every part of Tiffin Tales has been
+            built by us with dedication and care.
+          </p>
+          <div class="About-conc">
+            <p>
+              Join us on this journey and let us serve you food that feels like
+              home.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="Footer-section">
+        <h1 id="nav-Heading">Tiffin Tales</h1>
+
+        <div class="Footer-box">
+          <h5>About us</h5>
+          <div class="footer-anchor">
+            <a href="/">Home</a>
+            <a href="/AboutUs">About us</a>
+            {% if session.get('person') %}
+            <a href="/logout">Logout</a>
+            {% else %}
+            <a href="/login">Login</a>
+            <a href="/SignUp">Sign Up</a>
+            {% endif %}
+            <a href="/ContactUs">Contact Us</a>
+          </div>
+        </div>
+
+        <div class="Footer-box">
+          <h5>Quick Menu</h5>
+          <div class="footer-anchor">
+            <a href="/Terms&Cond">Terms & Conditions</a>
+            <a href="/PrivacyPol">Privacy Policy</a>
+            <a href="#">Refund & Cancellation Policy</a>
+          </div>
+        </div>
+
+        <div class="Footer-box2">
+          <h5>Delivery Timings</h5>
+          <div id="timings">
+            <p>Breakfast : 7:00 AM - 9:00 AM</p>
+            <p>Lunch : 11:00 AM - 1:00 PM</p>
+            <p>Dinner : 6:00 PM - 9:00 PM</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

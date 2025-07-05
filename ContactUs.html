@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login form</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <marquee class="time-info">
+        Timings- Breakfast: 7:00 AM - 9:00 AM , Lunch: 11:00 AM - 1:00 PM ,
+        Dinner: 6:00 PM - 9:00 PM
+      </marquee>
+      <div id="Navbar">
+        <div class="nav-Title">
+          <div>
+            <h1 id="nav-Heading">Tiffin Tales</h1>
+          </div>
+          <div id="nav-H2">Tiffin That Tastes Like Home</div>
+        </div>
+        <div class="nav-anchors">
+          <a href="/" class="border">Home</a>
+          <a href="/AboutUs" class="border">About us</a>
+          <a href="/logout"><button>Logout</button></a>
+        </div>
+      </div>
+    </header>
+    <main class="contact-main">
+      <div class="contact-section">
+        <div class="contact-box">
+          <div class="flash-container">
+            {% with messages = get_flashed_messages(with_categories=true) %} {%
+            if messages %} {% for category, message in messages %}
+            <div class="flash-message {{ category }}">
+              {{ message }}
+              <button class="close-btn" onclick="dismissMessage(this)">
+                X
+              </button>
+            </div>
+            {% endfor %} {% endif %} {% endwith %}
+          </div>
+          <form action="/ContactUs" method="POST">
+            <p class="contact-title">CONTACT US</p>
+            <div class="credentials">
+              <p>Name</p>
+              <input
+                type="text"
+                class="input"
+                name="name"
+                id="name"
+                placeholder="Enter Your Name..."
+                required
+              />
+            </div>
+
+            <div class="credentials">
+              <p>Mobile Number</p>
+              <input
+                type="tel"
+                class="input"
+                name="mob"
+                id="mob"
+                placeholder="Enter your phone no..."
+                required
+              />
+            </div>
+
+            <div class="credentials">
+              <p>Email</p>
+              <input
+                type="email"
+                class="input"
+                name="email"
+                id="email"
+                placeholder="Enter Your Email..."
+                required
+              />
+            </div>
+            <div class="credentials">
+              <p>Message</p>
+              <textarea
+                id="msg"
+                name="msg"
+                placeholder="Enter your Query..."
+                rows="10"
+              ></textarea>
+            </div>
+
+            <div class="credentials">
+              <input type="submit" class="login-submit" value="SEND" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="Footer-section">
+        <h1 id="nav-Heading">Tiffin Tales</h1>
+
+        <div class="Footer-box">
+          <h5>About us</h5>
+          <div class="footer-anchor">
+            <a href="/">Home</a>
+            <a href="/AboutUs">About us</a>
+            {% if session.get('person') %}
+            <a href="/logout">Logout</a>
+            {% else %}
+            <a href="/login">Login</a>
+            <a href="/SignUp">Sign Up</a>
+            {% endif %}
+            <a href="/ContactUs">Contact Us</a>
+          </div>
+        </div>
+
+        <div class="Footer-box">
+          <h5>Quick Menu</h5>
+          <div class="footer-anchor">
+            <a href="/Terms&Cond">Terms & Conditions</a>
+            <a href="/PrivacyPol">Privacy Policy</a>
+            <a href="#">Refund & Cancellation Policy</a>
+          </div>
+        </div>
+
+        <div class="Footer-box2">
+          <h5>Delivery Timings</h5>
+          <div id="timings">
+            <p>Breakfast : 7:00 AM - 9:00 AM</p>
+            <p>Lunch : 11:00 AM - 1:00 PM</p>
+            <p>Dinner : 6:00 PM - 9:00 PM</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

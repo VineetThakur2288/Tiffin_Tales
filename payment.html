@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Tiffin Tales</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <marquee class="time-info">
+            Timings- Breakfast: 7:00 AM - 9:00 AM , Lunch: 11:00 AM - 1:00 PM , Dinner: 6:00 PM - 9:00 PM
+        </marquee>
+        <div id="Navbar">
+            <div class="nav-Title">
+                <div>
+                    <h1 id="nav-Heading">Tiffin Tales</h1>
+                </div>
+                <div id="nav-H2">
+                    Tiffin That Tastes Like Home
+                </div>
+            </div>
+            <div class="nav-anchors">
+                <a href="/afterlogin" class="border">Home</a>
+                <a href="/AboutUs" class="border">About us</a>
+                <a href="/ContactUs" class="border">Contact us</a>
+                <a href="/cart"><button>CART</button></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Payment Section -->
+<main style="text-align: center; margin-top: 100px;">
+        <h1 style="color: #e63003;">Scan to Pay</h1>
+        <h2>Please scan the QR code below to complete your payment using PhonePe.</h2>
+
+        <!-- Your QR Code Image -->
+        <img src="static/paymentQR.jpg" alt="PhonePe QR Code" style="width: 300px; height: 300px; border: 1px solid black; border-radius: 0px;">
+
+        <br><br>
+        <!-- WhatsApp Button -->
+            <a href="https://wa.me/7652010249?text=Hello, I have completed the payment. Please find the screenshot attached." target="_blank">
+    <button style="background-color: green; color: white; padding: 10px 20px; border-radius: 5px; font-size: 16px; margin-bottom: 20px;">Send Payment Screenshot on WhatsApp</button>
+            </a>
+            <div style="text-align: center; margin: 30px;">
+    <label>
+        <input type="checkbox" id="paymentDone" onchange="checkConfirmStatus()"> Payment Done
+    </label><br><br>
+    <label>
+        <input type="checkbox" id="screenshotSent" onchange="checkConfirmStatus()"> Payment Screenshot Sent on WhatsApp
+        <form action="/confirmod" method="POST" onsubmit="return validateCheckboxes();">
+    <input type="hidden" name="user_mobile" value="7652010249"> <!-- You can set this dynamically via session -->
+    
+    <label>
+        <input type="checkbox" id="paymentDone"> Payment Done
+    </label><br><br>
+    <label>
+        <input type="checkbox" id="screenshotSent"> Payment Screenshot Sent on WhatsApp
+    </label><br><br>
+    <a href="/confirmod"<button type="submit" class="payment-button" id="confirmButton" >Confirm Order</button></a>
+        </form></label><br><br>
+</div>
+</main>
+   <script>
+function validateCheckboxes() {
+    return document.getElementById('paymentDone').checked && document.getElementById('screenshotSent').checked;
+}
+
+document.getElementById('paymentDone').addEventListener('change', toggleConfirm);
+document.getElementById('screenshotSent').addEventListener('change', toggleConfirm);
+
+function toggleConfirm() {
+    const confirmButton = document.getElementById('confirmButton');
+    confirmButton.disabled = !validateCheckboxes();
+}
+</script>
+
+</body>
+
+</html>

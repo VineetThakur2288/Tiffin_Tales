@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Cart - Tiffin Tales</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .cart-item {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+    }
+    #cart-items p {
+      margin: 5px 0;
+    }
+    h2 {
+      margin-top: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <marquee class="time-info">
+      Timings - Breakfast: 7:00 AM - 9:00 AM, Lunch: 11:00 AM - 1:00 PM, Dinner: 6:00 PM - 9:00 PM
+    </marquee>
+    <div id="Navbar">
+      <div class="nav-Title">
+        <h1 id="nav-Heading">Tiffin Tales</h1>
+        <div id="nav-H2">Tiffin That Tastes Like Home</div>
+      </div>
+      <div class="nav-anchors">
+        <a href="/afterlogin" class="border">Home</a>
+        <a href="/AboutUs" class="border">About Us</a>
+        <a href="/ContactUs" class="border">Contact Us</a>
+        <a href="/cart"><button>CART</button></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h2>Your Cart</h2>
+    <div id="cart-items" style="max-width: 800px; margin: 0 auto; padding: 20px;"></div>
+  </main>
+
+  <footer>
+    <div class="Footer-section">
+      <h1 id="nav-Heading">Tiffin Tales</h1>
+      <div class="Footer-box">
+        <h5>About us</h5>
+        <div class="footer-anchor">
+          <a href="/">Home</a>
+          <a href="/AboutUs">About us</a>
+          <a href="/signin">SignIn</a>
+          <a href="/ContactUs">Contact Us</a>
+        </div>
+      </div>
+      <div class="Footer-box">
+        <h5>Quick Menu</h5>
+        <div class="footer-anchor">
+          <a href="#">Terms & Conditions</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Refund & Cancellation Policy</a>
+        </div>
+      </div>
+      <div class="Footer-box2">
+        <h5>Delivery Timings</h5>
+        <p>Breakfast : 7:00 AM - 9:00 AM</p>
+        <p>Lunch : 11:00 AM - 1:00 PM</p>
+        <p>Dinner : 6:00 PM - 9:00 PM</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const container = document.getElementById('cart-items');
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p>Your cart is empty.</p>';
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <h3>${item.plan}</h3>
+          <p><strong>Meal Type:</strong> ${item.mealType}</p>
+          <p><strong>Times per Day:</strong> ${item.mealTimes || item.mealTime}</p>
+          <p><strong>Days per Month:</strong> ${item.mealDays}</p>
+        `;
+        container.appendChild(div);
+      });
+    });
+  </script>
+</body>
+</html>

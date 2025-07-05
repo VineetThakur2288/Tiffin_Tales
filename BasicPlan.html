@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Basic Meal Plan</title>
+  <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <marquee class="time-info">
+      Timings- Breakfast: 7:00 AM - 9:00 AM , Lunch: 11:00 AM - 1:00 PM , Dinner: 6:00 PM - 9:00 PM
+    </marquee>
+    <div id="Navbar">
+      <div class="nav-Title">
+        <div>
+          <h1 id="nav-Heading">Tiffin Tales</h1>
+        </div>
+        <div id="nav-H2">Tiffin That Tastes Like Home</div>
+      </div>
+      <div class="nav-anchors">
+        <a href="/afterlogin" class="border">Home</a>
+        <a href="/AboutUs" class="border">About us</a>
+        <a href="/ContactUs" class="border">Contact us</a>
+        <a href="/cart"><button>CART</button></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="Plan-Section">
+      <div class="info-img">
+        <img src="/static/basicthali2.jpg" alt="Thali Image" height="350px" />
+      </div>
+
+      <div class="info-opt">
+        <div class="Basic-title">
+          <p>Basic Meal Plan</p>
+        </div>
+
+        <div class="Dropdown">
+          <label for="Veg/Non-veg">Veg/Non-Veg :-</label>
+          <select class="Opt" name="Veg/Non-veg">
+            <option value="Veg Meal">Veg Meal</option>
+            <option value="Non-Veg Meal">Non-Veg Meal</option>
+          </select>
+        </div>
+
+        <div class="Dropdown">
+          <label for="Times">Once/Twice/Thrice A Day :-</label>
+          <select class="Opt" name="Times">
+            <option value="Thrice">Thrice a day</option>
+            <option value="Twice">Twice a day</option>
+            <option value="Once">Once a day</option>
+          </select>
+        </div>
+
+        <div class="Dropdown">
+          <label for="days">How Many Days A Month :-</label>
+          <select class="Opt" name="days">
+            <option value="Full Month">Full Month (30 Days)</option>
+            <option value="Without Sundays">Without Sundays (27 Days)</option>
+            <option value="Without Weekend">Without Weekends (23 Days)</option>
+          </select>
+        </div>
+
+        <div id="price">Rs.</div>
+
+        <div>
+          <input id="subscribeBtn" class="Plan-button" type="button" value="Add To Cart"/>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="Footer-section">
+      <h1 id="nav-Heading">Tiffin Tales</h1>
+
+      <div class="Footer-box">
+        <h5>About us</h5>
+        <div class="footer-anchor">
+          <a href="/">Home</a>
+          <a href="/AboutUs">About us</a>
+          <a href="/signin">SignIn</a>
+          <a href="/ContactUs">Contact Us</a>
+        </div>
+      </div>
+
+      <div class="Footer-box">
+        <h5>Quick Menu</h5>
+        <div class="footer-anchor">
+          <a>Terms & Conditions</a>
+          <a>Privacy Policy</a>
+          <a>Refund & Cancellation Policy</a>
+        </div>
+      </div>
+
+      <div class="Footer-box2">
+        <h5>Delivery Timings</h5>
+        <div id="timings">
+          <p>Breakfast : 7:00 AM - 9:00 AM</p>
+          <p>Lunch : 11:00 AM - 1:00 PM</p>
+          <p>Dinner : 6:00 PM - 9:00 PM</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('subscribeBtn').addEventListener('click', function () {
+      let mealType = document.querySelector('select[name="Veg/Non-veg"]').value;
+      let mealTimes = document.querySelector('select[name="Times"]').value;
+      let mealDays = document.querySelector('select[name="days"]').value;
+
+      let cartItem = {
+        type: 'Basic Meal Plan',
+        mealType: mealType,
+        mealTimes: mealTimes,
+        mealDays: mealDays
+      };
+
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(cartItem);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Item added to cart successfully!');
+      window.location.href = '/cart';
+    });
+  </script>
+</body>
+</html>
